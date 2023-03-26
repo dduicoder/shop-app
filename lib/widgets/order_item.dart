@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -66,7 +65,7 @@ class _OrderItemState extends State<OrderItem> {
                 right: 16,
                 bottom: 16,
               ),
-              height: min(order.products.length * 21 + 16, 180),
+              height: order.products.length * 19 + 16,
               child: Column(
                 children: order.products.map(
                   (prod) {
@@ -75,9 +74,6 @@ class _OrderItemState extends State<OrderItem> {
                       children: [
                         Text(
                           prod.title,
-                          style: const TextStyle(
-                            fontSize: 18,
-                          ),
                         ),
                         Text(
                           "${prod.quantity}X \$${prod.price}",

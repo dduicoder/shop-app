@@ -15,6 +15,19 @@ class CartScreen extends StatelessWidget {
     final cart = Provider.of<Cart>(context);
     final items = cart.items;
 
+    void order() {
+      if (cart.itemCount == 0) {
+        return;
+      }
+
+      Provider.of<Orders>(context, listen: false).addOrder(
+        items.values.toList(),
+        cart.totalAmount,
+      );
+
+      cart.clearCart();
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
@@ -72,34 +85,26 @@ class CartScreen extends StatelessWidget {
               child: cart.itemCount == 0
                   ? const Text("Your cart is empty.")
                   : ListView.builder(
-                      itemCount: cart.items.length,
+                      itemCount: items.length,
                       itemBuilder: (ctx, i) => CartItem(
                           items.keys.toList()[i], items.values.toList()[i]),
                     ),
             ),
-            TextButton(
-              onPressed: () {
-                if (cart.itemCount == 0) {
-                  return;
-                }
-
-                Provider.of<Orders>(context, listen: false).addOrder(
-                  items.values.toList(),
-                  cart.totalAmount,
-                );
-
-                cart.clearCart();
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    cart.clearCart();
+                  },
+                  child: const Text("Clear All"),
                 ),
-                child: Text(
-                  "Order",
+                TextButton(
+                  onPressed: order,
+                  child: const Text("Order"),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
       ),
