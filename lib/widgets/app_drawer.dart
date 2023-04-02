@@ -18,7 +18,13 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.payment_rounded),
-            title: const Text("Orders"),
+            title: const Text(
+              "Orders",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             onTap: () {
               Navigator.of(context).pushNamed(OrdersScreen.routeName);
             },
@@ -26,7 +32,13 @@ class AppDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             leading: const Icon(Icons.edit_rounded),
-            title: const Text("User Products"),
+            title: const Text(
+              "User Products",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
             onTap: () {
               Navigator.of(context).pushNamed(UserProductsScreen.routeName);
             },
