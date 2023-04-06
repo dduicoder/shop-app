@@ -23,52 +23,55 @@ class ProductItem extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: GridTile(
-        footer: GridTileBar(
-          backgroundColor: Colors.black.withOpacity(0.5),
-          leading: Consumer<Product>(
-            builder: (_, consumerProduct, __) => IconButton(
-              icon: Icon(
-                consumerProduct.isFavorite
-                    ? Icons.favorite_rounded
-                    : Icons.favorite_border_rounded,
+        footer: SizedBox(
+          height: 42,
+          child: GridTileBar(
+            backgroundColor: Colors.black.withOpacity(0.5),
+            leading: Consumer<Product>(
+              builder: (_, consumerProduct, __) => IconButton(
+                icon: Icon(
+                  consumerProduct.isFavorite
+                      ? Icons.favorite_rounded
+                      : Icons.favorite_border_rounded,
+                ),
+                onPressed: () {
+                  product.toggleFavoriteStatus();
+                },
+              ),
+            ),
+            title: Text(
+              product.title,
+            ),
+            trailing: IconButton(
+              icon: const Icon(
+                Icons.shopping_cart_rounded,
               ),
               onPressed: () {
-                product.toggleFavoriteStatus();
+                cart.addItem(
+                  product.id,
+                  product.title,
+                  product.price,
+                );
+
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text(
+                      "Added Item to cart",
+                      textAlign: TextAlign.center,
+                    ),
+                    duration: const Duration(milliseconds: 2500),
+                    action: SnackBarAction(
+                      label: "UNDO",
+                      onPressed: () {
+                        cart.removeSingleItem(product.id);
+                      },
+                    ),
+                  ),
+                );
               },
             ),
-          ),
-          title: Text(
-            product.title,
-          ),
-          trailing: IconButton(
-            icon: const Icon(
-              Icons.shopping_cart_rounded,
-            ),
-            onPressed: () {
-              cart.addItem(
-                product.id,
-                product.title,
-                product.price,
-              );
-
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: const Text(
-                    "Added Item to cart",
-                    textAlign: TextAlign.center,
-                  ),
-                  duration: const Duration(milliseconds: 2500),
-                  action: SnackBarAction(
-                    label: "UNDO",
-                    onPressed: () {
-                      cart.removeSingleItem(product.id);
-                    },
-                  ),
-                ),
-              );
-            },
           ),
         ),
         child: GestureDetector(

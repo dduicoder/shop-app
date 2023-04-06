@@ -99,7 +99,7 @@ class CartScreen extends StatelessWidget {
                   },
                   child: const Text("Clear All"),
                 ),
-                TextButton(
+                ElevatedButton(
                   onPressed: order,
                   child: const Text("Order"),
                 ),
